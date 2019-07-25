@@ -2,7 +2,7 @@ import Danger
 import Foundation
 let danger = Danger()
 let editedFiles = danger.git.modifiedFiles + danger.git.createdFiles
-if danger.git.modifiedFiles.contains("CHANGELOG") {
+if editedFiles.contains("CHANGELOG") {
     message("CHANGELOG exists")
     let file = danger.utils.readFile("CHANGELOG")
     let sub = file.split(separator: "\n").drop { !$0.hasPrefix("## Upcoming") }.dropFirst().drop { !$0.hasPrefix("## ") }[0].drop { $0 != "]" }.dropFirst(4)
@@ -25,4 +25,4 @@ if danger.git.modifiedFiles.contains("CHANGELOG") {
 } else {
     warn("There is no CHANGELOG!")
 }
-message("These files have changed: \(editedFiles.joined())")
+message("These files have changed: \(editedFiles)")
