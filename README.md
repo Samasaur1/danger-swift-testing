@@ -1,3 +1,3 @@
 # DangerSwiftTesting
 
-A description of this package.
+Testing danger-swift in a Swift project
