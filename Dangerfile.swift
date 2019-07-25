@@ -24,7 +24,7 @@ containsChangelog: if editedFiles.contains("CHANGELOG") {
     df.dateFormat = "yyyy-MM-dd"
     let todaysDate = df.string(from: Date())
     guard df.date(from: dateString) != nil else {
-        fail("Illegal date string in CHANGELOG!")
+        fail("Illegal date string in CHANGELOG!: '\(dateString)'")
         fail(message: "Illegal date string in CHANGELOG!", file: "CHANGELOG", line: lineNumber)
         suggestion(code: "## [\(newVersion)] - \(todaysDate)", file: "CHANGELOG", line: lineNumber)
         break containsChangelog
