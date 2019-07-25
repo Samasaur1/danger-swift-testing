@@ -3,47 +3,12 @@ import Foundation
 let danger = Danger()
 let editedFiles = danger.git.modifiedFiles + danger.git.createdFiles
 if editedFiles.contains("CHANGELOG") {
-    message("CHANGELOG exists")
-    print(7)
-    let file = danger.utils.readFile("CHANGELOG")
-    print(9)
-    print()
-    print(file)
-    print()
-    var lines = file.split(separator: "\n")
-    print(14)
-    print()
-    print(lines)
-    print()
-    lines.removeAll { !$0.hasPrefix("## ") }
-    print(19)
-    print()
-    print(lines)
-    print()
-    lines.removeFirst()
-    print(24)
-    print()
-    print(lines)
-    print()
-    var line = lines.first!
-    print(29)
-    print()
-    print(line)
-    print()
-    line = line.drop { $0 != "]" }
-    print(34)
-    print()
-    print(line)
-    print()
-    line = line.dropFirst(4)
-    print(39)
-    print()
-    print(line)
-    print()
-    let str = String(line)
+    let lineNumber = danger.utils.lines(for: "## ", inFile: "CHANGELOG")[1]
+    let line = danger.utils.readFile("CHANGELOG").split(separator: "\n")[lineNumber - 1]
+    let dateString = String(line.drop { $0 != "]" }.dropFirst(4))
     let df = DateFormatter()
     df.dateFormat = "yyyy-MM-dd"
-    let date = df.date(from: str) ?? Date.distantPast
+    let date = df.date(from: dateString) ?? Date.distantPast
     var c = Calendar.init(identifier: .gregorian)
     c.timeZone = TimeZone(abbreviation: "GMT-4") ?? c.timeZone
 
@@ -52,12 +17,16 @@ if editedFiles.contains("CHANGELOG") {
 
     if actualDate != changelogDate {
         fail("The latest date in the CHANGELOG is not today!")
-        //convert to fail(message:file:line:)
+        fail(message: "The latest date in the CHANGELOG is not today!", file: "CHANGELOG", line: lineNumber)
     } else {
         message("The latest date in the CHANGELOG is today, \(changelogDate.description)")
     }
 } else {
-    warn("There is no CHANGELOG!")
+    if FileManager.default.fileExists(atPath: "CHANGELOG") {
+        fail("The CHANGELOG was not updated")
+    } else {
+        warn("There is no CHANGELOG!")
+    }
 }
 message("These files have changed: \(editedFiles)")
 
