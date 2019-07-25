@@ -5,7 +5,9 @@ let editedFiles = danger.git.modifiedFiles + danger.git.createdFiles
 if editedFiles.contains("CHANGELOG") {
     message("CHANGELOG exists")
     let file = danger.utils.readFile("CHANGELOG")
-    let sub = file.split(separator: "\n").drop { !$0.hasPrefix("## Upcoming") }.dropFirst().drop { !$0.hasPrefix("## ") }[0].drop { $0 != "]" }.dropFirst(4)
+    let lines = file.split(separator: "\n")
+    let thisVersionLine = lines.drop { !$0.hasPrefix("## Upcoming") }.dropFirst().drop { !$0.hasPrefix("## ") }
+    let sub = thisVersionLine[0].drop { $0 != "]" }.dropFirst(4)
     let str = String(sub)
     let df = DateFormatter()
     df.dateFormat = "yyyy-MM-dd"
@@ -26,3 +28,5 @@ if editedFiles.contains("CHANGELOG") {
     warn("There is no CHANGELOG!")
 }
 message("These files have changed: \(editedFiles)")
+
+//danger.github.pullRequest.title
