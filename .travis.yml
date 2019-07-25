@@ -2,9 +2,21 @@ language: generic
 sudo: false
 dist: trusty
 
-os: osx
+cache:
+directories:
+# General SwiftPM
+# Danger Swift plugins, like Yams
+- .build
+- ~/.danger-swift
 
-osx_image: xcode10.2
+install:
+# Grab the latest Danger JS from npm
+- npm install -g danger
+# Compile the Danger runtime
+- swift build
 
 script:
+# Run the Dangerfile.swift
+- swift run danger-swift ci
+# Test my app...
 - swift test
