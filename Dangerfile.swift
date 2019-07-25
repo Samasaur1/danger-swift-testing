@@ -3,6 +3,7 @@ import Foundation
 let danger = Danger()
 let editedFiles = danger.git.modifiedFiles + danger.git.createdFiles
 if danger.git.modifiedFiles.contains("CHANGELOG") {
+    message("CHANGELOG exists")
     let file = danger.utils.readFile("CHANGELOG")
     let sub = file.split(separator: "\n").drop { !$0.hasPrefix("## Upcoming") }.dropFirst().drop { !$0.hasPrefix("## ") }[0].drop { $0 != "]" }.dropFirst(4)
     let str = String(sub)
@@ -18,6 +19,8 @@ if danger.git.modifiedFiles.contains("CHANGELOG") {
     if actualDate != changelogDate {
         fail("The latest date in the CHANGELOG is not today!")
         //convert to fail(message:file:line:)
+    } else {
+        message("The latest date in the CHANGELOG is today, \(changelogDate.description)")
     }
 } else {
     warn("There is no CHANGELOG!")
