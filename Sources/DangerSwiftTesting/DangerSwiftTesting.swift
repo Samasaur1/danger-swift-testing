@@ -5,3 +5,6 @@ public struct DangerSwiftTesting {
         self.text = text
     }
 }
+public protocol HasText {
+    var text: String { get set }
+}
