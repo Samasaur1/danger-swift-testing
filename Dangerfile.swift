@@ -19,7 +19,7 @@ if danger.github.pullRequest.title.contains("$DESCRIPTION") {
 containsChangelog: if editedFiles.contains("CHANGELOG") {
     let lineNumber = danger.utils.lines(for: "## ", inFile: "CHANGELOG")[1]
 //    let line = danger.utils.readFile("CHANGELOG").split(separator: "\n")[lineNumber - 2]
-    let line = danger.utils.readFile("CHANGELOG").split(separator: "\n").filter { $0.hasPrefix("## ") }.dropFirst()[0]
+    let line = danger.utils.readFile("CHANGELOG").split(separator: "\n").filter { $0.hasPrefix("## ") }[1]
     let dateString = String(line.drop { $0 != "]" }.dropFirst(4))
     let df = DateFormatter()
     df.dateFormat = "yyyy-MM-dd"
