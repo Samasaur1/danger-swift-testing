@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Upcoming]
 
+## [0.2.0] - 2019-07-26
+
 ## [0.16.1] - 2019-06-24
 ### Added
 - Testing on Swift 5.0.1 and Xcode 10.2
@@ -14,4 +16,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-deploying docs
 
 [Upcoming]: https://github.com/Samasaur1/DiceKit/compare/development
+[0.17.0]: https://github.com/Samasaur1/DiceKit/compare/development
 [0.16.1]: https://github.com/Samasaur1/DiceKit/compare/v0.16.0...v0.16.1
