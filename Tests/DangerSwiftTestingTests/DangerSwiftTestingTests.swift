@@ -8,4 +8,9 @@ final class DangerSwiftTestingTests: XCTestCase {
         // results.
         XCTAssertEqual(DangerSwiftTesting().text, "Hello, World!")
     }
+
+    func testStringInterpolation() {
+        let d = DangerSwiftTesting()
+        XCTAssertEqual("\(d)", d.text)
+    }
 }
