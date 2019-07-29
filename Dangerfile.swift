@@ -57,7 +57,9 @@ if danger.github.pullRequest.base.ref == "master" {
 }
 
 for file in editedFiles where file.hasPrefix("Sources/") {
-    let testsFile = "Tests/\(file.dropFirst("Sources/".count).dropLast(".swift".count))Tests.swift"
+    let dir = file.dropFirst("Sources/".count).split(separator: "/")[0]
+    let fileName = file.dropFirst("Sources/\(dir)/".count).dropLast(".swift".count)
+    let testsFile = "Tests/\(dir)/\(fileName)Tests.swift"
     if editedFiles.contains(testsFile) {
         message("\(file) has had corresponding changes in its test file")
     } else {
