@@ -8,8 +8,4 @@ final class DangerSwiftTestingTests: XCTestCase {
         // results.
         XCTAssertEqual(DangerSwiftTesting().text, "Hello, World!")
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }
