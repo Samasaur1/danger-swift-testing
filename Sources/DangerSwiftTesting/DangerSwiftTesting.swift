@@ -10,3 +10,9 @@ public protocol HasText {
 }
 
 extension DangerSwiftTesting: HasText {}
+
+extension DefaultStringInterpolation {
+    mutating func appendInterpolation(_ value: HasText) {
+        self.appendInterpolation(value.text)
+    }
+}
