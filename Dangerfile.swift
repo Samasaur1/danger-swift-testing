@@ -55,3 +55,16 @@ if danger.github.pullRequest.base.ref == "master" {
         }
     }
 }
+
+for file in editedFiles where file.hasPrefix("Sources/") {
+    let testsFile = "Tests/\(file.dropFirst("Sources/".count).dropLast(".swift".count))Tests.swift"
+    if editedFiles.contains(testsFile) {
+        message("\(file) has had corresponding changes in its test file")
+    } else {
+        if FileManager.default.fileExists(atPath: testsFile) {
+            fail("\(file) was changed, but \(testsFile) wasn't!")
+        } else {
+            warn("\(file) was changed, but there is no file at path \(testsFile). Maybe it's under a different path, or maybe there's no tests")
+        }
+    }
+}
