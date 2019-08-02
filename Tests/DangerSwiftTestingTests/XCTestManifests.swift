@@ -7,6 +7,7 @@ extension DangerSwiftTestingTests {
     // to regenerate.
     static let __allTests__DangerSwiftTestingTests = [
         ("testExample", testExample),
+        ("testStringInterpolation", testStringInterpolation),
     ]
 }
 

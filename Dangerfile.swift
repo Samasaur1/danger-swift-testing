@@ -70,3 +70,24 @@ for file in editedFiles where file.hasPrefix("Sources/") {
         }
     }
 }
+
+if danger.git.createdFiles.contains(where: { $0.hasPrefix("Tests/") }) {
+    if editedFiles.contains("Tests/LinuxMain.swift") {
+        message("LinuxMain was updated, but be sure it has ALL the tests")
+    } else {
+        fail("Tests were added, but LinuxMain wasn't updated! Run `swift test --generate-linuxmain` to update it")
+    }
+} else if editedFiles.contains(where: { $0.hasPrefix("Tests/") }) {
+    if editedFiles.contains("Tests/LinuxMain.swift") {
+        message("LinuxMain was updated, but be sure it has ALL the tests")
+    } else {
+        if editedFiles.contains(where: { (str: String) -> Bool in
+            str.range(of: #"Tests/\w+/XCTestManifests\.swift"#, options: .regularExpression) != nil
+        }) {
+            fail("An XCTestManifests file was updated, but LinuxMain wasn't! run `swift test --generate-linuxmain` to update it")
+            //This could happen if commas were changed, and then it shouldn't fail. Just add/delete a new line at the end of LinuxMain
+        } else {
+            warn("Test files were changed, but LinuxMain wasn't! This could be okay, if you just changed tests, but if you added any, run `swift test --generate-linuxmain` to update LinuxMain")
+        }
+    }
+}
