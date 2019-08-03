@@ -12,8 +12,7 @@ osx_image: xcode10.2
 
 jobs:
   include:
-  - script: swift test
-    stage: test
+  - stage: test
   - script: swift run danger-swift ci
     install: npm install -g danger
     stage: danger
@@ -24,12 +23,6 @@ directories:
 # Danger Swift plugins, like Yams
 - .build
 - ~/.danger-swift
-
-#install: #Only install Danger on the danger stage
-## Grab the latest Danger JS from npm
-#- npm install -g danger
-## Compile the Danger runtime
-#- swift build
 
 script:
 - swift test
