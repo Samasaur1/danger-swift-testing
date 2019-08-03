@@ -14,7 +14,9 @@ jobs:
   include:
   - stage: test
   - script: swift run danger-swift ci
-    install: npm install -g danger
+    install:
+    - npm install -g danger
+    - swift build
     stage: danger
 
 cache:
