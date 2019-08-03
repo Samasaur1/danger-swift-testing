@@ -2,8 +2,19 @@ language: generic
 sudo: false
 dist: trusty
 
+stages:
+- test
+- name: danger
+  if: type = pull_request
+
 os: osx
 osx_image: xcode10.2
+
+jobs:
+  include:
+  - script: swift run danger-swift ci
+    install: npm install -g danger
+    stage: danger
 
 cache:
 directories:
@@ -12,14 +23,11 @@ directories:
 - .build
 - ~/.danger-swift
 
-install:
-# Grab the latest Danger JS from npm
-- npm install -g danger
-# Compile the Danger runtime
-- swift build
+#install: #Only install Danger on the danger stage
+## Grab the latest Danger JS from npm
+#- npm install -g danger
+## Compile the Danger runtime
+#- swift build
 
 script:
-# Run the Dangerfile.swift
-- swift run danger-swift ci
-# Test my app...
 - swift test
