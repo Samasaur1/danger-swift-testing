@@ -1,0 +1,32 @@
+name: CI
+
+on: push
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+        swift_version: [5.0.1, 4.2.4]
+    runs-on: ${{ matrix.os }}
+    name: Test
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Swift ${{ matrix.swift_version }}
+      env:
+        SWIFT_VERSION: ${{ matrix.swift_version }}
+      run: eval "$(curl -sL https://swiftenv.fuller.li/install.sh || curl -sL https://raw.githubusercontent.com/kylef/swiftenv/master/docs/install.sh)
+    - name: Test on Swift ${{ matrix.swift_version }}
+      run: swift test
+  danger:
+    name: Run Danger
+    needs: test
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Danger JS
+      run: npm install -g danger
+    - name: Build danger-swift
+      run: swift build
+    - name: Run Danger
+      run: swift run danger-swift ci
