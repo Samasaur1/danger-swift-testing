@@ -19,9 +19,4 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install Danger JS
-      run: npm install -g danger
-    - name: Build danger-swift
-      run: swift build
-    - name: Run Danger
-      run: swift run danger-swift ci
+    - uses: danger/swift@2.0.1
