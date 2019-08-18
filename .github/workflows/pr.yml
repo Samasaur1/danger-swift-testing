@@ -16,7 +16,7 @@ jobs:
   danger:
     name: Run Danger
     needs: test
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: danger/swift@2.0.1
