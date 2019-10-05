@@ -16,7 +16,7 @@ jobs:
   danger:
     name: Run Danger
     needs: test
-    runs-on: [ubuntu-latest, macOS-latest]
+    runs-on: macOS-latest #Must be a single value
     steps:
     - uses: actions/checkout@v1
     - uses: danger/swift@2.0.3
